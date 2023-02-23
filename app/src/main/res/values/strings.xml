@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Laboratory 7 (Retrofit) || V.Kravets</string>
+
+    <string-array name="currenciesList">
+        <item>Долар</item>
+        <item>Євро</item>
+        <item>Фунт</item>
+        <item>Злотий</item>
+        <item>Гривня</item>
+    </string-array>
+
+</resources>
