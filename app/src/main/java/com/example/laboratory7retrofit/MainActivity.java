@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
                             String.valueOf(currencyA),
                             String.valueOf(currencyB)));
 
-                    editText.setText(String.valueOf(res));
-                    resultMoney.setText(String.valueOf(res * amount));
+                    editText.setText(new DecimalFormat("#0.00").format(res));
+                    resultMoney.setText(new DecimalFormat("#0.00").format(res * amount));
 
                     } catch (Exception ex) {
                         resultMoney.setText("Ошибка конвертирования, напишите в тех поддержку.");

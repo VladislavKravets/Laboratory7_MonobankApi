@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Laboratory 7 (Retrofit) || V.Kravets</string>
+    <string name="inputSum">Введіть сумму:</string>
+    <string name="resultInfo">Результат:</string>
+    <string name="selectCurrency">Виберіть валюту:</string>
+    <string name="convert">Конвертувати в:</string>
+    <string name="buy">Покупка</string>
+    <string name="sell">Продаж</string>
+    <string name="cross">НБУ</string>
+    <string name="convertButton">Convert</string>
 
     <string-array name="currenciesList">
         <item>Долар</item>
