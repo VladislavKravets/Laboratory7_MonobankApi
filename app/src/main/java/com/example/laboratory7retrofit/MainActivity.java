@@ -1,15 +1,26 @@
 package com.example.laboratory7retrofit;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -25,8 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     private List<CurrencyPojo> postMono;
     private RadioGroup radioGroup;
+    private TextView displayTextView;
 
-    /* база данных для наших валют, вписываем одинаковые название с string.xml и кодировку ISO 4217 */
+    /*
+    база данных кодировок для наших валют,
+    вписываем одинаковые название с string.xml и кодировку ISO 4217
+    */
     private final Map<String, Integer> currencyCodes = new HashMap<String, Integer>() {{
         put("Долар", 840);
         put("Євро", 978);
@@ -46,19 +61,39 @@ public class MainActivity extends AppCompatActivity {
         Spinner comboB = findViewById(R.id.comboB);
 
         EditText editText = findViewById(R.id.editTextNumber3);
-        EditText amoutIn = findViewById(R.id.inputMoney);
+        EditText amountIn = findViewById(R.id.inputMoney);
         EditText resultMoney = findViewById(R.id.resultMoney);
 
         radioGroup = findViewById(R.id.radioGroup);
 
-        getDataFromApi(); // первоначальная инициализация(там запуск потока)
+        displayTextView = findViewById(R.id.user_name_text);
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (account != null) {
+            displayTextView.append(account.getDisplayName());
+        }
+
+        Button logoutButton = findViewById(R.id.logout_btn);
+        logoutButton.setOnClickListener(v -> {
+            // Выход из учетной записи Firebase
+            mAuth.signOut();
+            // Очистить сохраненные данные аутентификации Google
+            GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+            // Переход
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        getDataFromApi(); // первоначальная инициализация(там запуск потока)
 
         convertButton.setOnClickListener(e -> {
             if(postMono != null) {
                 int currencyA = currencyCodes.get(comboA.getSelectedItem().toString());
                 int currencyB = currencyCodes.get(comboB.getSelectedItem().toString());
-                double amount = Double.parseDouble(amoutIn.getText().toString());
+                double amount = Double.parseDouble(amountIn.getText().toString());
 
                 if (currencyA == currencyB) {
                     editText.setText("Вы не можете перевести " + comboA.getSelectedItem().toString() +
@@ -74,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     resultMoney.setText(new DecimalFormat("#0.00").format(res * amount));
 
                     } catch (Exception ex) {
-                        resultMoney.setText("Ошибка конвертирования, напишите в тех поддержку.");
+                        resultMoney.setText("Ошибка конвертирования");
                         ex.printStackTrace();
                     }
                 }
@@ -97,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                             while (true) {
                                 postMono = response.body();
                                 try {
-                                    Thread.sleep(30000);
+                                    Thread.sleep(60000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

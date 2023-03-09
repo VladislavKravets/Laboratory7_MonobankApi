@@ -7,7 +7,7 @@
     <string name="buy">Покупка</string>
     <string name="sell">Продаж</string>
     <string name="cross">НБУ</string>
-    <string name="convertButton">Convert</string>
+    <string name="convertButton">Конвертувати</string>
 
     <string-array name="currenciesList">
         <item>Долар</item>
@@ -16,5 +16,6 @@
         <item>Злотий</item>
         <item>Гривня</item>
     </string-array>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

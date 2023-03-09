@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "154614829374",
+    "project_id": "authfirebase-a3694",
+    "storage_bucket": "authfirebase-a3694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154614829374:android:95a5fe3c34fb0a623d9c6f",
+        "android_client_info": {
+          "package_name": "com.example.laboratory7retrofit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154614829374-erfcfkmkrgc37ki2hqbaicv258ucl5ce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXyJCg4z9Cpv2ejIEqWUXV9-qFnfEUrGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154614829374-erfcfkmkrgc37ki2hqbaicv258ucl5ce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
