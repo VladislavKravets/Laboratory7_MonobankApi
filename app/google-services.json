@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "154614829374-ignb99gnfhjm4hipfobtisorvmtt4kmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.laboratory7retrofit",
+            "certificate_hash": "374b23b18fac4676b5933c2c3c3737fb03649430"
+          }
+        },
+        {
           "client_id": "154614829374-erfcfkmkrgc37ki2hqbaicv258ucl5ce.apps.googleusercontent.com",
           "client_type": 3
         }

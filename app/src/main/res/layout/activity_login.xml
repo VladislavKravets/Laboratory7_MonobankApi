@@ -11,15 +11,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to my app!"
+        android:text="@string/welcome_to_my_app"
         android:textSize="24sp"
         android:layout_marginBottom="32dp"/>
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/loginGoogle_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="login"
-        android:text="Login with google" />
+        android:onClick="loginWithGoogle"
+        android:text="@string/login_with_google" />
+
+    <Button
+        android:id="@+id/loginYahoo_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_with_yahoo" />
 
 </LinearLayout>

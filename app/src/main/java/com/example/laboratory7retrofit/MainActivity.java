@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     private List<CurrencyPojo> postMono;
     private RadioGroup radioGroup;
-    private TextView displayTextView;
 
     /*
     база данных кодировок для наших валют,
@@ -66,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
 
-        displayTextView = findViewById(R.id.user_name_text);
+        TextView displayTextView = findViewById(R.id.user_name_text);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        FirebaseUser user = mAuth.getCurrentUser();
 
-        if (account != null) {
-            displayTextView.append(account.getDisplayName());
+        // вывод информации об пользователе
+        if (user != null) {
+            displayTextView.append(user.getDisplayName());
         }
 
         Button logoutButton = findViewById(R.id.logout_btn);

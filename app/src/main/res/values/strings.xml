@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Laboratory 7 (Retrofit) || V.Kravets</string>
+    <string name="app_name">Laboratory 8 || V.Kravets</string>
     <string name="inputSum">Введіть сумму:</string>
     <string name="resultInfo">Результат:</string>
     <string name="selectCurrency">Виберіть валюту:</string>
@@ -8,7 +8,6 @@
     <string name="sell">Продаж</string>
     <string name="cross">НБУ</string>
     <string name="convertButton">Конвертувати</string>
-
     <string-array name="currenciesList">
         <item>Долар</item>
         <item>Євро</item>
@@ -17,5 +16,8 @@
         <item>Гривня</item>
     </string-array>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="login_with_google">Login with google</string>
+    <string name="login_with_yahoo">Login with yahoo</string>
+    <string name="welcome_to_my_app">Welcome to my app!</string>
 
 </resources>

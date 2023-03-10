@@ -1,5 +1,6 @@
 package com.example.laboratory7retrofit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,16 +13,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.OAuthProvider;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -42,15 +54,62 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Отображение кнопки для аутентификации через Google
-        Button signInButton = findViewById(R.id.login_btn);
-        signInButton.setOnClickListener(view -> login());
+        Button signGoogleInButton = findViewById(R.id.loginGoogle_btn);
+        signGoogleInButton.setOnClickListener(view -> loginWithGoogle());
+
+        // Отображение кнопки для аутентификации через Yahoo
+        Button signYahooInButton = findViewById(R.id.loginYahoo_btn);
+        signYahooInButton.setOnClickListener(view -> loginWithYahoo());
     }
 
-    private void login() {
+    // формируем url для google
+    private void loginWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    // формируем url для yahoo
+    private void loginWithYahoo() {
+        signInWithYahooAuthProvider(OAuthProvider.newBuilder("yahoo.com")
+                .addCustomParameter("prompt", "login")
+                .addCustomParameter("language", "en")
+                .setScopes(
+                        new ArrayList<String>(){
+                            {
+                                add("email");
+                                add("profile");
+                            }
+                        }
+                )
+                .build()
+        );
+    }
+
+    // логика авторизация yahoo
+    private void signInWithYahooAuthProvider(OAuthProvider provider) {
+        Task<AuthResult> yahooPendingTaskResult = mAuth.getPendingAuthResult();
+        if(yahooPendingTaskResult != null) {
+            yahooPendingTaskResult.addOnCompleteListener(task ->
+                    Toast.makeText(LoginActivity.this, "Успішно.", Toast.LENGTH_SHORT)
+                            .show())
+                    .addOnFailureListener(e ->
+                            Toast.makeText(LoginActivity.this, e.getMessage(),
+                                    Toast.LENGTH_SHORT).show()
+                    );
+        }else{
+            mAuth.startActivityForSignInWithProvider(this,provider)
+                    .addOnFailureListener(e ->
+                            Toast.makeText(LoginActivity.this, e.getMessage(),
+                                    Toast.LENGTH_SHORT).show())
+                    .addOnSuccessListener(authResult -> {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            });
+        }
+    }
+
+    // гугл авторизация
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -75,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
             } catch (ApiException e) {
-                System.out.println(e.getMessage());
                 // Обработка ошибок при выборе учетной записи Google
                 Toast.makeText(LoginActivity.this,
                         "Google sign in failed.",
